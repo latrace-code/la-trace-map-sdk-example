@@ -1,0 +1,22 @@
+{
+  "name": "la-trace-map-sdk-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Exemple d'integration du SDK carto La Trace (@la-trace/map-sdk) : carte embarquee /explore + geocodage + carte statique signee cote serveur.",
+  "scripts": {
+    "build": "esbuild src/main.js --bundle --format=esm --target=es2020 --outfile=public/dist/app.bundle.js",
+    "start": "npm run build && node server.mjs",
+    "dev": "npm run build"
+  },
+  "dependencies": {
+    "@la-trace/map-sdk": "^0.3.6",
+    "maplibre-gl": "^4.7.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

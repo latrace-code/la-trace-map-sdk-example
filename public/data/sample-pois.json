@@ -1,0 +1,10 @@
+[
+  { "id": "1", "title": "Bistrot des Halles", "type": "restaurant", "lat": 48.8622, "lng": 2.3465, "address": "5 rue Montorgueil", "city": "Paris", "postalCode": "75001", "country": "FR", "price": "€€", "url": "https://example.com/poi/1", "tags": ["terrasse"] },
+  { "id": "2", "title": "Le Petit Comptoir", "type": "restaurant", "lat": 48.8698, "lng": 2.3412, "address": "18 rue Vivienne", "city": "Paris", "postalCode": "75002", "country": "FR", "price": "€€€", "url": "https://example.com/poi/2", "tags": ["cuisine-du-monde"] },
+  { "id": "3", "title": "Bar du Marais", "type": "bar", "lat": 48.8590, "lng": 2.3580, "address": "12 rue des Archives", "city": "Paris", "postalCode": "75004", "country": "FR", "price": "€€", "url": "https://example.com/poi/3", "tags": ["cocktails"] },
+  { "id": "4", "title": "Cave Saint-Paul", "type": "wineshop", "lat": 48.8548, "lng": 2.3610, "address": "7 rue Saint-Paul", "city": "Paris", "postalCode": "75004", "country": "FR", "price": "€€", "url": "https://example.com/poi/4", "tags": ["nature"] },
+  { "id": "5", "title": "Epicerie du Canal", "type": "shop", "lat": 48.8710, "lng": 2.3660, "address": "24 quai de Valmy", "city": "Paris", "postalCode": "75010", "country": "FR", "url": "https://example.com/poi/5", "tags": ["bio"] },
+  { "id": "6", "title": "Hotel Beaumarchais", "type": "hotel", "lat": 48.8635, "lng": 2.3700, "address": "3 rue Oberkampf", "city": "Paris", "postalCode": "75011", "country": "FR", "price": "€€€", "url": "https://example.com/poi/6" },
+  { "id": "7", "title": "Table de Bastille", "type": "restaurant", "lat": 48.8530, "lng": 2.3690, "address": "9 rue de la Roquette", "city": "Paris", "postalCode": "75011", "country": "FR", "price": "€€", "url": "https://example.com/poi/7", "tags": ["terrasse"] },
+  { "id": "8", "title": "Comptoir a Vins", "type": "wineshop", "lat": 48.8672, "lng": 2.3499, "address": "14 rue Tiquetonne", "city": "Paris", "postalCode": "75002", "country": "FR", "price": "€€€", "url": "https://example.com/poi/8", "tags": ["nature"] }
+]
