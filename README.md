@@ -21,7 +21,7 @@ Node >= 20. `npm start` bundle `src/main.js` (esbuild) puis lance `server.mjs`.
 
 | Fichier | Role |
 |---|---|
-| `src/main.js` | Init de la carte (`createLaTraceExplore`), push des POIs, ecoute des evenements, barre de recherche (`createLaTraceGeocoder`). |
+| `src/main.js` | Init de la carte (`createLaTraceExplore`), push des POIs, ecoute des evenements, barre de recherche (`createLaTraceGeocoder`), vignette cliquable (`buildNavigationUrl`). |
 | `src/apiToPoi.js` | **Le seul point a adapter chez vous** : mapper un enregistrement de votre API vers le format `Poi` du SDK. |
 | `server.mjs` | Injecte la config au front (`/config.js`) et **signe** l'URL de carte statique (`/latrace/static-map`) - le secret ne quitte jamais le serveur. |
 | `public/data/sample-pois.json` | Jeu de donnees d'exemple (a remplacer par votre API). |
@@ -38,15 +38,30 @@ Node >= 20. `npm start` bundle `src/main.js` (esbuild) puis lance `server.mjs`.
 3. **Carte statique** (vignette hors carte, ex. fiche article) : l'URL doit etre
    **signee cote serveur** (un `<img>` ne porte pas de header d'auth). Voir
    `serveStaticMap` dans `server.mjs`, equivalent du helper
-   `@la-trace/map-sdk/static-map`.
+   `@la-trace/map-sdk/static-map`. La vignette etant une image, `buildNavigationUrl(poi)`
+   l'enveloppe dans un lien qui lance la navigation Google Maps (URLs publiques :
+   ni cle, ni quota, ni facturation). Voir `renderThumbnail` dans `src/main.js`.
+
+## Personnaliser les marqueurs
+
+- `config.poiColors` : couleur du marqueur, keyee par **categorie hote** (`Poi.category`).
+  Source unique : la vignette statique relit la meme table (`markers=lng,lat,type,corps-disque`).
+- `config.poiIcons` : remplace le glyphe par **votre logo**, keye par `PoiType` (`Winegrower`)
+  **ou** categorie hote (`wineshop`) - **la casse tranche**. Valeurs acceptees : URL `https`
+  ou data URI `data:image/svg+xml`.
+- `config.wording` : `poiNounSingle` / `poiNounPlural` renomment les POIs dans le compteur
+  de resultats.
 
 ## Format `Poi` et contrat complet
 
 Le format exact d'un POI pousse (champs requis / optionnels, categories, filtres,
-evenements du pont, endpoints REST) est decrit dans le **contrat d'API** :
-[`docs/API-CONTRACT.md`](docs/API-CONTRACT.md).
+evenements du pont, endpoints REST) est decrit dans le **contrat d'API**, qui fait foi.
 
-Contrat REST interactif (testable en direct) et doc du SDK : liens fournis par e-mail.
+Ce depot n'en embarque **volontairement pas de copie** : une copie diverge de la version
+courante et vous mettrait sur une fausse piste. Le contrat SDK et le contrat REST
+interactif (testable en direct) sont publies en ligne ; les liens vous sont fournis avec
+les identifiants de demo, par e-mail. La version du SDK epinglee dans `package.json` vous
+dit a quelle revision du contrat cet exemple se refere.
 
 ## Environnement
 
