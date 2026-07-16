@@ -16,7 +16,12 @@
       background: #fff; color: #101214; border-radius: 6px; overflow: hidden; z-index: 10; box-shadow: 0 4px 12px #0004; }
     #suggestions li { padding: 8px 12px; cursor: pointer; font-size: 14px; }
     #suggestions li:hover { background: #f0f2f3; }
+    main { flex: 1; min-height: 0; display: flex; }
     #map { flex: 1; min-height: 0; }
+    aside { width: 300px; padding: 16px; border-left: 1px solid #e3e6e8; overflow: auto; }
+    aside h2 { margin: 0 0 4px; font-size: 14px; }
+    aside p { margin: 8px 0 0; font-size: 12px; color: #52616b; line-height: 1.45; }
+    #thumb-img { width: 100%; height: auto; border-radius: 8px; display: block; }
   </style>
 </head>
 <body>
@@ -28,7 +33,15 @@
         <ul id="suggestions"></ul>
       </div>
     </header>
-    <div id="map"></div>
+    <main>
+      <div id="map"></div>
+      <aside>
+        <h2>Vignette editoriale</h2>
+        <a id="thumb-link" target="_blank" rel="noopener"><img id="thumb-img" alt="" /></a>
+        <p>Carte statique signee cote serveur (hors carte interactive). Le clic ouvre la
+          navigation Google Maps via <code>buildNavigationUrl</code>.</p>
+      </aside>
+    </main>
   </div>
   <script src="/config.js"></script>
   <script type="module" src="/dist/app.bundle.js"></script>
