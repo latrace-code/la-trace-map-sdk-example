@@ -20,13 +20,15 @@ const CATEGORY_MAP = {
 };
 
 // category de votre API -> PoiType La Trace (pilote l'icone). Valeurs possibles :
-// Restaurant, Bar, Hotel, BnB, Cafe, Bakery, Market, ProducerShop, Grocery, WineShop...
+// Restaurant, Bar, Hotel, BnB, Cafe, Bakery, Market, ProducerShop, Grocery, Winegrower...
+// La valeur doit exister dans la taxonomie La Trace : un type inconnu ne leve pas
+// d'erreur, il retombe en silence sur le glyphe et les couleurs par defaut.
 const POI_TYPE_MAP = {
   restaurant: 'Restaurant',
   bar: 'Bar',
   hotel: 'Hotel',
   shop: 'Grocery',
-  wineshop: 'WineShop',
+  wineshop: 'Winegrower',
 };
 
 export function apiToPoi(record) {
