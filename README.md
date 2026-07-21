@@ -49,6 +49,11 @@ Node >= 20. `npm start` bundle `src/main.js` (esbuild) puis lance `server.mjs`.
 - `config.poiIcons` : remplace le glyphe par **votre logo**, keye par `PoiType` (`Winegrower`)
   **ou** categorie hote (`wineshop`) - **la casse tranche**. Valeurs acceptees : URL `https`
   ou data URI `data:image/svg+xml`.
+  **Pour avoir ce logo aussi sur la vignette statique**, il faut une URL `https` : la carte
+  rend le data URI dans le navigateur, la vignette est composee par le serveur qui ne sait
+  que fetcher une URL. Passez-la en 5e champ de `markers` (`lng,lat,type,corps-disque,icon`),
+  cf. `POI_ICONS` / `renderThumbnail` dans `src/main.js`. Sans elle, la vignette retombe sur
+  le glyphe La Trace du `type` alors que la carte porte votre logo.
 - `config.wording` : `poiNounSingle` / `poiNounPlural` renomment les POIs dans le compteur
   de resultats.
 

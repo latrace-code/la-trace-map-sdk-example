@@ -33,6 +33,13 @@ const WINE_GLASS_SVG =
   ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
   '<path d="M8 3h8l-.7 6.2a3.4 3.4 0 0 1-6.6 0L8 3Z"/><path d="M12 13v6"/><path d="M9 21h6"/></svg>';
 
+// Table unique des logos, relue par la carte ET par la vignette statique. Mettez-y des
+// URL `https` si vous voulez le logo AUSSI sur la vignette : le data URI ci-dessus ne
+// vit que cote carte (cf. renderThumbnail).
+const POI_ICONS = {
+  // wineshop: 'https://cdn.exemple.com/pictos/cave.svg',
+};
+
 async function main() {
   const explore = createLaTraceExplore({
     container: '#map',
@@ -112,7 +119,17 @@ function renderThumbnail(poi) {
   const color = palette ? `${hex(palette.text)}-${hex(palette.background)}` : '';
   // `markers` est positionnel : lng,lat[,type[,color[,icon]]]. La carte colore par
   // categorie hote, la vignette prend un PoiType : le pont est a la charge de l'hote.
-  const markers = [lng, lat, poi.poiType || '', color].join(',');
+  //
+  // 5e champ `icon` : votre logo, pour que la vignette porte le MEME marqueur que la
+  // carte. ATTENTION, la contrainte n'est pas la meme des deux cotes : la carte accepte
+  // un data URI SVG (rendu dans le navigateur), la vignette est composee par le serveur
+  // qui ne sait que FETCHER une URL -> `https` uniquement. Un data URI est donc filtre
+  // ici, sinon il partirait dans l'URL pour rien (et un ';' y casserait le decoupage).
+  const iconUrl = POI_ICONS[poi.category] || '';
+  const icon = iconUrl.startsWith('https://') && !iconUrl.includes(';') ? iconUrl : '';
+  const markers = [lng, lat, poi.poiType || '', color, icon]
+    .join(',')
+    .replace(/,+$/, '');
 
   const params = new URLSearchParams({
     center: `${lng},${lat}`, zoom: '15', width: '560', height: '320', markers,
