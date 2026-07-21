@@ -10,7 +10,7 @@
     "dev": "npm run build"
   },
   "dependencies": {
-    "@la-trace/map-sdk": "^0.4.0",
+    "@la-trace/map-sdk": "^0.5.0",
     "maplibre-gl": "^4.7.0"
   },
   "devDependencies": {
