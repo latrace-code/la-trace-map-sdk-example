@@ -7,6 +7,34 @@ import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHmac } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+
+// Node ne charge PAS .env tout seul (il faudrait lancer `node --env-file=.env`). Cet
+// exemple reste zero-dependance : on lit .env (a cote de ce fichier) au demarrage, sans
+// ecraser une variable deja presente dans l'environnement. Le README dit `cp .env.example
+// .env` puis `npm start` : sans ce loader, apiKey / configId resteraient vides et la carte
+// tomberait en silence sur la carte par defaut, geocodage et vignette morts.
+function loadDotEnv() {
+  let raw;
+  try {
+    raw = readFileSync(new URL('./.env', import.meta.url), 'utf8');
+  } catch (e) {
+    if (e.code === 'ENOENT') return; // pas de .env : on garde l'environnement tel quel
+    throw e;
+  }
+  for (const line of raw.split('\n')) {
+    if (/^\s*(#|$)/.test(line)) continue;
+    const eq = line.indexOf('=');
+    if (eq === -1) continue;
+    const key = line.slice(0, eq).trim();
+    let val = line.slice(eq + 1).trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    if (key && process.env[key] === undefined) process.env[key] = val;
+  }
+}
+loadDotEnv();
 
 // Signature de la carte statique (contrat SDK section 1.4 + 4.2). Le SDK impose une
 // URL signee (HMAC du canonical = tous les params sauf `sig`, tries par cle) avec un
