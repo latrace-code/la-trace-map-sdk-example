@@ -141,8 +141,13 @@ function renderThumbnail(poi) {
 
 // Barre de recherche de lieu cote hote (hors iframe), optionnelle : le helper porte le
 // fetch /geocode, le cache de predictions et la normalisation de bbox.
+// Par defaut l'API ne propose que des lieux et des adresses (pas d'hotel ni de
+// commerce) ; `types` ajoute les reperes (canal, gare, parc) ou les etablissements.
 if (cfg.apiBase) {
-  const geocoder = createLaTraceGeocoder({ apiKey: cfg.apiKey, apiBase: cfg.apiBase, countries: 'fr,be' });
+  const geocoder = createLaTraceGeocoder({
+    apiKey: cfg.apiKey, apiBase: cfg.apiBase, countries: 'fr,be', lang: 'fr',
+    types: ['city', 'town', 'village', 'district', 'address', 'landmark'],
+  });
   const input = document.querySelector('#search');
   const list = document.querySelector('#suggestions');
   let predictions = [];
@@ -155,8 +160,17 @@ if (cfg.apiBase) {
   list?.addEventListener('click', async (e) => {
     const i = e.target?.dataset?.i;
     if (i == null) return;
-    const { center } = await geocoder.geocode({ predictionId: predictions[i].id });
-    window.__explore?.flyTo?.({ center: [center.lng, center.lat], zoom: 13 });
+    const loc = await geocoder.geocode({ predictionId: predictions[i].id });
+    // Une zone (commune, arrondissement, region) se cherche dans son viewport, un
+    // point (adresse, repere) autour de son centre : sinon « Paris » et « 75011 »
+    // rendent la meme liste, triee par distance depuis deux centroides voisins.
+    const isArea = ['city', 'town', 'village', 'district', 'region', 'country'].includes(loc.type);
+    if (isArea && loc.viewport) {
+      const { west, south, east, north } = loc.viewport;
+      window.__explore?.fitBounds?.([west, south, east, north]);
+    } else {
+      window.__explore?.flyTo?.({ center: [loc.center.lng, loc.center.lat], zoom: 15 });
+    }
     list.innerHTML = '';
     input.value = predictions[i].label;
   });

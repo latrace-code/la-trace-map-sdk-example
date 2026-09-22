@@ -34,6 +34,11 @@ Node >= 20. `npm start` bundle `src/main.js` (esbuild) puis lance `server.mjs`.
 
 2. **Geocodage / autocomplete** (barre de recherche cote hote) :
    `createLaTraceGeocoder({ apiKey, apiBase }).autocomplete(texte)` puis `.geocode({ predictionId })`.
+   Par defaut l'API ne propose que des **lieux et des adresses** (communes, arrondissements,
+   voies, numeros), jamais un hotel ou un commerce ; `types: [..., 'landmark']` ajoute les
+   reperes (canal, gare, parc), `'poi'` les etablissements. Chaque prediction porte un `type` :
+   une **zone** (`city`, `district`, `region`) se cherche dans son `viewport`, un **point**
+   (`address`) autour de son `center`. Voir le gestionnaire de clic dans `src/main.js`.
 
 3. **Carte statique** (vignette hors carte, ex. fiche article) : l'URL doit etre
    **signee cote serveur** (un `<img>` ne porte pas de header d'auth). Voir
