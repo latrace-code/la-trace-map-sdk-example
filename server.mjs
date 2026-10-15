@@ -98,7 +98,7 @@ function configJs() {
     apiKey: process.env.LATRACE_API_KEY || '',
     apiBase: process.env.LATRACE_API_BASE || '',
     configId: process.env.LATRACE_CONFIG_ID || '',
-    exploreBaseUrl: process.env.LATRACE_EXPLORE_BASE_URL || 'https://pre-prod--latrace.netlify.app',
+    exploreBaseUrl: process.env.LATRACE_EXPLORE_BASE_URL || 'https://app.latrace.com',
   };
   return `// Genere par server.mjs depuis l'environnement. Ne pas editer.\nwindow.LATRACE_CONFIG = ${JSON.stringify(cfg, null, 2)};\n`;
 }

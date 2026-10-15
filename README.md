@@ -75,5 +75,7 @@ dit a quelle revision du contrat cet exemple se refere.
 
 ## Environnement
 
-Tout tourne en **preprod** pendant l'integration. L'URL de production, les domaines
-autorises et les quotas de la cle vous seront communiques a la mise en service.
+Les valeurs par defaut de `.env.example` pointent la **production** :
+`https://prod.routinglatrace.com` pour l'API, `https://app.latrace.com` pour la carte.
+Pour la preprod, remplacez-les par `https://preprod.routinglatrace.com` et
+`https://pre-prod--latrace.netlify.app`, avec une cle `pk_test_*`.
